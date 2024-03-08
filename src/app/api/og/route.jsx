@@ -75,8 +75,58 @@ export async function GET(request) {
     );
   } catch (e) {
     console.log(`${e.message}`);
-    return new Response(`Failed to generate the image`, {
-      status: 500,
-    });
+    return new ImageResponse(
+        (
+          <div
+            style={{
+              backgroundColor: 'white',
+              backgroundSize: '150px 150px',
+              height: '100%',
+              width: '100%',
+              display: 'flex',
+              textAlign: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              flexWrap: 'nowrap',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                justifyItems: 'center',
+              }}
+            >
+              <img
+                alt="AsyncAPI"
+                height={200}
+                src="https://svgshare.com/i/dNo.svg"
+                style={{ margin: '0 30px' }}
+                width={300}
+              />
+            </div>
+            <div
+              style={{
+                fontSize: 60,
+                fontStyle: 'normal',
+                letterSpacing: '-0.025em',
+                color: 'black',
+                marginTop: 30,
+                padding: '0 120px',
+                lineHeight: 1.4,
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              "Welcome to AsyncAPI"
+            </div>
+          </div>
+        ),
+        {
+          width: 1200,
+          height: 630,
+        },
+      );
   }
 }
