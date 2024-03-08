@@ -10,6 +10,13 @@ export default function Home() {
           <code className={styles.code}>src/app/page.js</code>
         </p>
         <div>
+        <head>
+    <title>Hello world</title>
+    <meta
+      property="og:image"
+      content="https://og-examples.vercel.sh/api/static"
+    />
+</head>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
             target="_blank"
