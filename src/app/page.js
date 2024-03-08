@@ -37,6 +37,14 @@ export default function Page() {
 
   return (
     <div>
+          <meta
+      property="og:url"
+      content="https://og-image-test-jiehui.netlify.app/api/og"
+    />
+    <meta
+      property="og:image"
+      content="https://og-image-test-jiehui.netlify.app/api/og/"
+    />
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
