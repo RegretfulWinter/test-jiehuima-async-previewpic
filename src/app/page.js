@@ -13,8 +13,12 @@ export default function Home() {
         <head>
     <title>Hello world</title>
     <meta
-      property="og:image"
+      property="og:url"
       content="https://og-image-test-jiehui.netlify.app/api/og"
+    />
+    <meta
+      property="og:image"
+      content="https://og-image-test-jiehui.netlify.app/api/og/"
     />
 </head>
           <a
