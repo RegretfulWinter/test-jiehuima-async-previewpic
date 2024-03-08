@@ -6,14 +6,14 @@ export const runtime = 'nodejs';
  
 export async function GET(request) {
   try {
+    
     const { searchParams } = new URL(request.url);
     console.log( { searchParams })
-    const base64UrlValue = searchParams.get('base64Url');
-    const parsedUrl = new URL(base64UrlValue);
-    const base64Value = parsedUrl.searchParams.get('base64');
+    const base64Value = searchParams.get('base64');
     const parser = new Parser();
     console.log(base64Value);
     const title = Buffer.from(base64Value, 'base64').toString('utf-8');
+    console.log("title:",title);
     const { document } = await parser.parse(title);
     let mode = document.json();
     const header = mode.info.title + " " + mode.info.version;
