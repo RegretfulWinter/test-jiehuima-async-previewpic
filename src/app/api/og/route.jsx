@@ -5,13 +5,19 @@ import { Parser, fromURL } from '@asyncapi/parser';
 export const runtime = 'nodejs';
  
 export async function GET(request) {
+    
   try {
     
     const { searchParams } = new URL(request.url);
-    console.log( { searchParams })
-    const base64Value = searchParams.get('base64');
-    const parser = new Parser();
+    let base64UrlValue = searchParams.get('base64Url');
+    if (!base64UrlValue) {
+      base64UrlValue = 'https://testjiehuimaasyncapi.netlify.app/?base64=' + searchParams.get('base64');
+    }
+    console.log("searchParams:", { searchParams })
+    const parsedUrl = new URL(base64UrlValue);
+    const base64Value = parsedUrl.searchParams.get('base64');
     console.log(base64Value);
+    const parser = new Parser();
     const title = Buffer.from(base64Value, 'base64').toString('utf-8');
     console.log("title:",title);
     const { document } = await parser.parse(title);
