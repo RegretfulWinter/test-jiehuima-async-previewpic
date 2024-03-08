@@ -14,7 +14,7 @@ export default function Home() {
     <title>Hello world</title>
     <meta
       property="og:image"
-      content="https://og-examples.vercel.sh/api/static"
+      content="https://og-image-test-jiehui.netlify.app/api/og"
     />
 </head>
           <a
