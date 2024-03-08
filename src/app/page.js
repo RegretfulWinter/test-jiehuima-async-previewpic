@@ -1,106 +1,54 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import styles from "./page.module.css"; 
 
-export default function Home() {
+// In a component or page file
+import { useState } from 'react';
+
+export default function Page() {
+  const [base64Url, setBase64Url] = useState('');
+  const [imageUrl, setImageUrl] = useState(''); // State to hold the generated image URL
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Append the base64Url as a query parameter to the URL
+      const url = new URL('/api/og', window.location.origin);
+      url.searchParams.append('base64Url', base64Url);
+
+      const response = await fetch(url, {
+        method: 'GET', // Change to GET method
+        // Headers and body are not needed for a GET request
+      });
+
+      if (!response.ok) {
+        // Instead of throwing an error, consider showing a message to the user
+        console.error('Network response was not ok: ', response.statusText);
+        return;
+      }
+
+      const imageBlob = await response.blob();
+      const imageUrl = URL.createObjectURL(imageBlob);
+      setImageUrl(imageUrl); // Update state with the new image URL
+
+    } catch (error) {
+      console.error('Failed to load image:', error);
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-        <head>
-    <title>Hello world</title>
-    <meta
-      property="og:url"
-      content="https://og-image-test-jiehui.netlify.app/api/og"
-    />
-    <meta
-      property="og:image"
-      content="https://og-image-test-jiehui.netlify.app/api/og/"
-    />
-</head>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <div>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <input
+          type="text"
+          value={base64Url}
+          onChange={(e) => setBase64Url(e.target.value)}
+          placeholder="Enter base64 URL"
+          className={styles.input}
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <button type="submit" className={styles.button}>Generate Image</button>
+      </form>
+      {/* Displaying the generated image using state */}
+      {imageUrl && <img id="asyncApiImage" src={imageUrl} alt="Generated AsyncAPI Image" className={styles.image} />}
+    </div>
   );
-}
+  }

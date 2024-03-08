@@ -2,7 +2,7 @@ export default function robots() {
     return {
       rules: {
         userAgent: '*',
-        allow: '/api/og/*',
+        allow: '/api/*',
         disallow: '/private/',
       },
       sitemap: 'https://acme.com/sitemap.xml',
